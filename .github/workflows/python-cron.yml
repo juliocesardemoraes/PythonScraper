@@ -1,7 +1,7 @@
 name: Cron to update articles database
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "*/5 * * * *"
 jobs:
   cron:
     runs-on: ubuntu-latest
@@ -20,5 +20,6 @@ jobs:
       - name: CRON JOB
         env:
           MONGO_URI: ${{secrets.MONGO_URI}}
+          DEPLOY_ENVIROMENT: ${{secrets.DEPLOY_ENVIROMENT}}
         run: |
           scrapy crawl article
