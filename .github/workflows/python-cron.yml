@@ -26,4 +26,5 @@ jobs:
         env:
           MONGO_URI: ${{secrets.MONGO_URI}}
         run: |
+          echo "${{ secrets.TEST_VALUE }}"
           scrapy crawl article
