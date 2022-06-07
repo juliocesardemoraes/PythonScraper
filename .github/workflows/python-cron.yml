@@ -16,4 +16,4 @@ jobs:
           python -m pip install --upgrade pip
       - name: CRON JOB
         run: |
-         scrapy crawl article
+          scrapy crawl article
