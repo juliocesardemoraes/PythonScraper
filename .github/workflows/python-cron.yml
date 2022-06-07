@@ -6,6 +6,7 @@ jobs:
   cron:
     runs-on: ubuntu-latest
     steps:
+
       - uses: actions/checkout@v3
       - name: Set up Python 3.10
         uses: actions/setup-python@v3
@@ -20,6 +21,9 @@ jobs:
           pip install python-dotenv
           pip install textblob
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
       - name: CRON JOB
+        env:
+          MONGO_URI: ${{secrets.MONGO_URI}}
         run: |
           scrapy crawl article
