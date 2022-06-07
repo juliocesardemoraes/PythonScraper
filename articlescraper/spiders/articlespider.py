@@ -1,7 +1,7 @@
 import re
 import scrapy
-from articlescraper.db import Database
 from textblob.sentiments import NaiveBayesAnalyzer
+from articlescraper.database import Database
 from textblob import Blobber
 from textblob.taggers import NLTKTagger
 
@@ -17,7 +17,7 @@ class ArticleSpider(scrapy.Spider):
 
 
     def parse(self, response):
-        db = Database()
+        mongo = Database()
 
         article_title_list = []
         article_link_list = []
@@ -41,15 +41,23 @@ class ArticleSpider(scrapy.Spider):
 
             index = index + 1
 
-        db.insert_one_object({"article_title": article_title_list, "article_link": article_link_list,
-         "article_theme": article_theme_list })
+        mongo.database_instance.insert_one({"article_titlel": article_title_list,
+        "article_linkl": article_link_list,
+        "article_themel": article_theme_list })
+
+        return{
+            "code": 200,
+            "objectToDatabase": {
+                "article_title": article_title_list,
+                "article_link": article_link_list,
+                "article_theme": article_theme_list
+            }
+        }
 
 
-        #print(article_title_list)
-        #print(article_link_list)
-
-        tb = Blobber(analyzer=NaiveBayesAnalyzer())
-        nkl = Blobber(pos_tagger=NLTKTagger())
+        # NPL TO IMPLEMENT
+        # tb = Blobber(analyzer=NaiveBayesAnalyzer())
+        # nkl = Blobber(pos_tagger=NLTKTagger())
 
 
 """
