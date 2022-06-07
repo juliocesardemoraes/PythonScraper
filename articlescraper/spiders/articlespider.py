@@ -4,6 +4,7 @@ from textblob.sentiments import NaiveBayesAnalyzer
 from articlescraper.database import Database
 from textblob import Blobber
 from textblob.taggers import NLTKTagger
+import os;
 
 
 class ArticleSpider(scrapy.Spider):
@@ -17,7 +18,7 @@ class ArticleSpider(scrapy.Spider):
 
 
     def parse(self, response):
-        mongo = Database()
+        mongo = Database("bbc_" + os.getenv('DEPLOY_ENVIROMENT'))
 
         article_title_list = []
         article_link_list = []
