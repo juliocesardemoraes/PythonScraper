@@ -5,16 +5,18 @@ import os;
 load_dotenv()
 
 class Database():
-    def initialize_database(self):
-        client = MongoClient(os.getenv('MONGO_URI'))
+    def __init__(self):
+        self.client = MongoClient(os.getenv('MONGO_URI'))
+        self.db = self.client.webscrapping.bbc
+    
 
-        for dbe in client.list_databases():
-            print('DB', dbe)
+    def insert_one_object(self, object_to_insert):
+        """
+        Function to insert one object
+        :param object_to_insert object: Object to insert into mongo
+        """
+        self.db.insert_one(object_to_insert)
 
-        db = client.webscrapping.bbc
-        # db.insert_one({"title": "Teste", "name": "Aqui"})
-        return client
-        
 
 if __name__ == "__main__":
     db= Database()
