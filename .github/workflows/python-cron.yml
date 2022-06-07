@@ -16,4 +16,4 @@ jobs:
           python -m pip install --upgrade pip
       - name: CRON JOB
         run: |
-         echo "${{ secrets.TEST_VALUE }}"
+         scrapy crawl article
