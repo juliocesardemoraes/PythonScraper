@@ -11,9 +11,6 @@ class Database():
     returns: Database Instance
     """
     def __init__(self):
+        print("UUU", os.getenv('MONGO_URI'))
         self.client = MongoClient(os.getenv('MONGO_URI'))
         self.database_instance = self.client.webscrapping.bbc
-
-if __name__ == "__main__":
-    db= Database()
-    db.initialize_database()
