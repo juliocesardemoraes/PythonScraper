@@ -1,7 +1,7 @@
 name: Cron to update articles database
 on:
   schedule:
-    - cron: "* * * * *"
+    - cron: "*/5 * * * *"
 jobs:
   cron:
     runs-on: ubuntu-latest
@@ -15,16 +15,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install Scrapy
-          pip install itemadapter
-          pip install pymongo
-          pip install python-dotenv
-          pip install textblob
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
+          python -m pip install Scrapy itemadapter pymongo python-dotenv textblob
+          python -m pip install 'mongo[srv]' dnspython
       - name: CRON JOB
         env:
           MONGO_URI: ${{secrets.MONGO_URI}}
+          DEPLOY_ENVIROMENT: ${{secrets.DEPLOY_ENVIROMENT}}
         run: |
-          echo "${{ secrets.TEST_VALUE }}"
           scrapy crawl article
