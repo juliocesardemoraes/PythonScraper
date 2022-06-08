@@ -42,9 +42,9 @@ class ArticleSpider(scrapy.Spider):
 
             index = index + 1
 
-        mongo.database_instance.insert_one({"article_titlel": article_title_list,
-        "article_linkl": article_link_list,
-        "article_themel": article_theme_list })
+        mongo.database_instance.replace_one({"article_title":{"$in": article_title_list}}, {"article_title": article_title_list,
+        "article_link": article_link_list,
+        "article_theme": article_theme_list }, upsert = True )
 
         return{
             "code": 200,
