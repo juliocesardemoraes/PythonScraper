@@ -28,6 +28,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        python -m pip install 'mongo[srv]' dnspython
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -35,6 +36,9 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Pytest TDD
+      env:
+        MONGO_URI: ${{secrets.MONGO_URI}}
+        DEPLOY_ENVIROMENT: ${{secrets.DEPLOY_ENVIROMENT}}
       run: |
         pytest
     
