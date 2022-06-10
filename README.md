@@ -10,9 +10,19 @@ Backend for scraping news websites, with sentiment analysis.
 - Mongo
 - Scrapy
 - Nltk(sentiment analysis)
-- TDD
+- TDD(pytest)
+- Linting(pylint)
 
 ## How to Run IT
--- In Progress
+
+### Running Crawler with scrapy
+
+    scrapy crawl article
+
+### Testing With pytest
+
+    python -m pytest tests/
+
 ## Extra
+
 -- In Progress
