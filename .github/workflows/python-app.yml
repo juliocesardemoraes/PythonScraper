@@ -40,5 +40,5 @@ jobs:
         MONGO_URI: ${{secrets.MONGO_URI}}
         DEPLOY_ENVIROMENT: ${{secrets.DEPLOY_ENVIROMENT}}
       run: |
-        pytest
+        python -m pytest tests/ -s
     
