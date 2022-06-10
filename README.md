@@ -10,6 +10,7 @@ Backend for scraping news websites, with sentiment analysis.
 - Mongo
 - Scrapy
 - Nltk(sentiment analysis)
+- TDD
 
 ## How to Run IT
 -- In Progress
