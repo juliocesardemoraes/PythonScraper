@@ -52,7 +52,7 @@ class Article():
                 "date": self.date
                 }
 
-class ArticleSpider(scrapy.Spider):
+class BBCSpider(scrapy.Spider):
     """
     Class used for scraping web for news articles,
     in this case we're using the bbc news website
@@ -87,7 +87,7 @@ class ArticleSpider(scrapy.Spider):
                     article_object[index].link = article_link
 
                 article_object[index].title = article_to_format.strip()
-                
+
                 theme = article.css('a.media__tag::text').get()
                 article_object[index].category = theme
 
@@ -96,19 +96,16 @@ class ArticleSpider(scrapy.Spider):
 
                 article_object[index].image_link = image_src
 
-                
-                article_time_fetch = datetime.datetime(2018, 6, 1)
+                article_time_fetch = datetime.date.today().strftime("%Y-%m-%d")
 
-                article_object[index].date = article_time_fetch.strftime("%c")
+                article_object[index].date = article_time_fetch
 
             index = index + 1
 
         for article in article_object:
             yield scrapy.Request(article.link, callback=self.article_crawler, meta={'object': article})
 
-        return{
-            "code": 200,
-        }
+        return article_object
 
     def article_crawler(self,response):
         """
