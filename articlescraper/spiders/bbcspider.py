@@ -94,9 +94,7 @@ class BBCSpider(scrapy.Spider):
                 image = response.css('div.responsive-image')
                 image_src = image[index].css('img::attr(src)').get()
 
-                article_object[index].image_link = image_src
-
-                article_time_fetch = datetime.date.today().strftime("%Y-%m-%d")
+                article_time_fetch = datetime.date.today().strftime("%d-%m-%Y")
 
                 article_object[index].date = article_time_fetch
 
@@ -123,7 +121,13 @@ class BBCSpider(scrapy.Spider):
         article_object = response.meta['object']
 
         for article in response.css('article'):
+            image_src = article.css('img::attr(src)').get()
+            article_object.image_link = image_src
             content = article.css('p::text').extract()
+
+            if(content[0] == "This video can not be played" or content[0][0] == "("):
+                content.pop(0)
+
             article_object.content = content
 
         mongo.database_instance.replace_one({ "title": article_object.title},
